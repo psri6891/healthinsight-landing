@@ -1,0 +1,836 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>HealthInsighttoday - Blood Report Analysis & Personalized Health Plans</title>
+  <style>
+    * {
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
+      font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+    }
+    
+    body {
+      color: #333;
+      line-height: 1.6;
+    }
+    
+    .container {
+      width: 100%;
+      max-width: 1200px;
+      margin: 0 auto;
+      padding: 0 20px;
+    }
+    
+    header {
+      background-color: #fff;
+      box-shadow: 0 2px 10px rgba(0,0,0,0.1);
+      position: fixed;
+      width: 100%;
+      z-index: 1000;
+    }
+    
+    .nav-container {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      padding: 20px 0;
+    }
+    
+    .logo {
+      font-size: 24px;
+      font-weight: 700;
+      color: #3a86ff;
+    }
+    
+    .logo span {
+      color: #ff006e;
+    }
+    
+    nav ul {
+      display: flex;
+      list-style: none;
+    }
+    
+    nav ul li {
+      margin-left: 30px;
+    }
+    
+    nav ul li a {
+      text-decoration: none;
+      color: #333;
+      font-weight: 500;
+      transition: color 0.3s;
+    }
+    
+    nav ul li a:hover {
+      color: #3a86ff;
+    }
+    
+    .btn {
+      background-color: #3a86ff;
+      color: white;
+      padding: 10px 20px;
+      border-radius: 5px;
+      text-decoration: none;
+      font-weight: 500;
+      transition: background-color 0.3s;
+    }
+    
+    .btn:hover {
+      background-color: #2563eb;
+    }
+    
+    .btn-outline {
+      background-color: transparent;
+      border: 2px solid #3a86ff;
+      color: #3a86ff;
+    }
+    
+    .btn-outline:hover {
+      background-color: #3a86ff;
+      color: white;
+    }
+    
+    .hero {
+      padding: 150px 0 100px;
+      background: linear-gradient(135deg, #f5f7fa 0%, #c3cfe2 100%);
+    }
+    
+    .hero-content {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+    }
+    
+    .hero-text {
+      width: 50%;
+    }
+    
+    .hero-image {
+      width: 45%;
+    }
+    
+    .hero-image img {
+      width: 100%;
+      border-radius: 10px;
+      box-shadow: 0 10px 30px rgba(0,0,0,0.1);
+    }
+    
+    h1 {
+      font-size: 48px;
+      margin-bottom: 20px;
+      color: #1e3a8a;
+    }
+    
+    .highlight {
+      color: #ff006e;
+    }
+    
+    .hero p {
+      font-size: 18px;
+      margin-bottom: 30px;
+      color: #4b5563;
+    }
+    
+    .features {
+      padding: 100px 0;
+    }
+    
+    .section-title {
+      text-align: center;
+      margin-bottom: 60px;
+    }
+    
+    .section-title h2 {
+      font-size: 36px;
+      color: #1e3a8a;
+      margin-bottom: 15px;
+    }
+    
+    .section-title p {
+      font-size: 18px;
+      color: #6b7280;
+      max-width: 700px;
+      margin: 0 auto;
+    }
+    
+    .feature-grid {
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap: 30px;
+    }
+    
+    .feature-card {
+      background-color: white;
+      border-radius: 10px;
+      padding: 30px;
+      box-shadow: 0 5px 15px rgba(0,0,0,0.05);
+      transition: transform 0.3s, box-shadow 0.3s;
+    }
+    
+    .feature-card:hover {
+      transform: translateY(-10px);
+      box-shadow: 0 15px 30px rgba(0,0,0,0.1);
+    }
+    
+    .feature-icon {
+      background-color: #ebf5ff;
+      width: 70px;
+      height: 70px;
+      border-radius: 50%;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      margin-bottom: 20px;
+    }
+    
+    .feature-icon svg {
+      width: 35px;
+      height: 35px;
+      color: #3a86ff;
+    }
+    
+    .feature-card h3 {
+      font-size: 22px;
+      margin-bottom: 15px;
+      color: #1e3a8a;
+    }
+    
+    .feature-card p {
+      color: #6b7280;
+    }
+    
+    .how-it-works {
+      padding: 100px 0;
+      background-color: #f9fafb;
+    }
+    
+    .steps {
+      display: flex;
+      justify-content: space-between;
+      margin-top: 50px;
+    }
+    
+    .step {
+      width: 23%;
+      text-align: center;
+      position: relative;
+    }
+    
+    .step-number {
+      background-color: #3a86ff;
+      color: white;
+      width: 40px;
+      height: 40px;
+      border-radius: 50%;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      margin: 0 auto 20px;
+      font-weight: 700;
+    }
+    
+    .step h3 {
+      margin-bottom: 15px;
+      color: #1e3a8a;
+    }
+    
+    .step p {
+      color: #6b7280;
+    }
+    
+    .step::after {
+      content: '';
+      position: absolute;
+      top: 20px;
+      right: -40%;
+      width: 80%;
+      height: 2px;
+      background-color: #e5e7eb;
+    }
+    
+    .step:last-child::after {
+      display: none;
+    }
+    
+    .testimonials {
+      padding: 100px 0;
+    }
+    
+    .testimonial-grid {
+      display: grid;
+      grid-template-columns: repeat(2, 1fr);
+      gap: 30px;
+    }
+    
+    .testimonial-card {
+      background-color: white;
+      border-radius: 10px;
+      padding: 30px;
+      box-shadow: 0 5px 15px rgba(0,0,0,0.05);
+    }
+    
+    .testimonial-text {
+      font-style: italic;
+      margin-bottom: 20px;
+      color: #4b5563;
+    }
+    
+    .testimonial-author {
+      display: flex;
+      align-items: center;
+    }
+    
+    .author-image {
+      width: 50px;
+      height: 50px;
+      border-radius: 50%;
+      overflow: hidden;
+      margin-right: 15px;
+    }
+    
+    .author-image img {
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+    }
+    
+    .author-name {
+      font-weight: 600;
+      color: #1e3a8a;
+    }
+    
+    .author-title {
+      font-size: 14px;
+      color: #6b7280;
+    }
+    
+    .pricing {
+      padding: 100px 0;
+      background-color: #f9fafb;
+    }
+    
+    .pricing-grid {
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap: 30px;
+      margin-top: 50px;
+    }
+    
+    .pricing-card {
+      background-color: white;
+      border-radius: 10px;
+      padding: 40px 30px;
+      box-shadow: 0 5px 15px rgba(0,0,0,0.05);
+      text-align: center;
+      transition: transform 0.3s, box-shadow 0.3s;
+    }
+    
+    .pricing-card:hover {
+      transform: translateY(-10px);
+      box-shadow: 0 15px 30px rgba(0,0,0,0.1);
+    }
+    
+    .pricing-card.featured {
+      background-color: #3a86ff;
+      color: white;
+      position: relative;
+      overflow: hidden;
+    }
+    
+    .featured-tag {
+      position: absolute;
+      top: 20px;
+      right: -30px;
+      background-color: #ff006e;
+      color: white;
+      padding: 5px 30px;
+      transform: rotate(45deg);
+      font-size: 14px;
+      font-weight: 600;
+    }
+    
+    .pricing-card.featured h3,
+    .pricing-card.featured .price,
+    .pricing-card.featured .price-description,
+    .pricing-card.featured .feature-list li {
+      color: white;
+    }
+    
+    .pricing-card.featured .btn {
+      background-color: white;
+      color: #3a86ff;
+    }
+    
+    .pricing-card.featured .btn:hover {
+      background-color: #f3f4f6;
+    }
+    
+    .pricing-card h3 {
+      font-size: 24px;
+      margin-bottom: 15px;
+      color: #1e3a8a;
+    }
+    
+    .price {
+      font-size: 48px;
+      font-weight: 700;
+      color: #1e3a8a;
+      margin-bottom: 5px;
+    }
+    
+    .price-description {
+      color: #6b7280;
+      margin-bottom: 30px;
+    }
+    
+    .feature-list {
+      list-style: none;
+      margin-bottom: 30px;
+    }
+    
+    .feature-list li {
+      padding: 10px 0;
+      border-bottom: 1px solid #e5e7eb;
+      color: #4b5563;
+    }
+    
+    .feature-list li:last-child {
+      border-bottom: none;
+    }
+    
+    .cta {
+      padding: 100px 0;
+      background: linear-gradient(135deg, #3a86ff 0%, #1e3a8a 100%);
+      color: white;
+      text-align: center;
+    }
+    
+    .cta h2 {
+      font-size: 36px;
+      margin-bottom: 20px;
+    }
+    
+    .cta p {
+      font-size: 18px;
+      max-width: 700px;
+      margin: 0 auto 30px;
+      opacity: 0.9;
+    }
+    
+    .cta .btn {
+      background-color: white;
+      color: #3a86ff;
+      font-size: 18px;
+      padding: 15px 30px;
+    }
+    
+    .cta .btn:hover {
+      background-color: #f3f4f6;
+    }
+    
+    footer {
+      background-color: #1e3a8a;
+      color: white;
+      padding: 60px 0 30px;
+    }
+    
+    .footer-grid {
+      display: grid;
+      grid-template-columns: 2fr 1fr 1fr 1fr;
+      gap: 30px;
+      margin-bottom: 40px;
+    }
+    
+    .footer-logo {
+      font-size: 24px;
+      font-weight: 700;
+      margin-bottom: 15px;
+      color: white;
+    }
+    
+    .footer-logo span {
+      color: #ff006e;
+    }
+    
+    .footer-description {
+      opacity: 0.8;
+      margin-bottom: 20px;
+    }
+    
+    .social-icons {
+      display: flex;
+    }
+    
+    .social-icons a {
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      width: 40px;
+      height: 40px;
+      border-radius: 50%;
+      background-color: rgba(255,255,255,0.1);
+      margin-right: 10px;
+      color: white;
+      transition: background-color 0.3s;
+    }
+    
+    .social-icons a:hover {
+      background-color: #3a86ff;
+    }
+    
+    .footer-links h4 {
+      font-size: 18px;
+      margin-bottom: 20px;
+      color: white;
+    }
+    
+    .footer-links ul {
+      list-style: none;
+    }
+    
+    .footer-links ul li {
+      margin-bottom: 10px;
+    }
+    
+    .footer-links ul li a {
+      color: rgba(255,255,255,0.8);
+      text-decoration: none;
+      transition: color 0.3s;
+    }
+    
+    .footer-links ul li a:hover {
+      color: white;
+    }
+    
+    .footer-bottom {
+      text-align: center;
+      padding-top: 30px;
+      border-top: 1px solid rgba(255,255,255,0.1);
+      opacity: 0.7;
+      font-size: 14px;
+    }
+    
+    @media (max-width: 992px) {
+      .hero-content {
+        flex-direction: column;
+      }
+      
+      .hero-text, .hero-image {
+        width: 100%;
+      }
+      
+      .hero-text {
+        margin-bottom: 50px;
+      }
+      
+      .feature-grid {
+        grid-template-columns: repeat(2, 1fr);
+      }
+      
+      .steps {
+        flex-wrap: wrap;
+      }
+      
+      .step {
+        width: 48%;
+        margin-bottom: 40px;
+      }
+      
+      .step::after {
+        display: none;
+      }
+      
+      .pricing-grid {
+        grid-template-columns: repeat(2, 1fr);
+      }
+      
+      .footer-grid {
+        grid-template-columns: 1fr 1fr;
+      }
+    }
+    
+    @media (max-width: 768px) {
+      h1 {
+        font-size: 36px;
+      }
+      
+      .feature-grid, .testimonial-grid, .pricing-grid {
+        grid-template-columns: 1fr;
+      }
+      
+      .step {
+        width: 100%;
+      }
+    }
+  </style>
+</head>
+<body>
+  <header>
+    <div class="container nav-container">
+      <div class="logo">HealthInsight<span>today</span></div>
+      <nav>
+        <ul>
+          <li><a href="#features">Features</a></li>
+          <li><a href="#how-it-works">How It Works</a></li>
+          <li><a href="#pricing">Pricing</a></li>
+          <li><a href="#" class="btn btn-outline">Login</a></li>
+          <li><a href="#" class="btn">Sign Up</a></li>
+        </ul>
+      </nav>
+    </div>
+  </header>
+
+  <section class="hero">
+    <div class="container hero-content">
+      <div class="hero-text">
+        <h1>Transform Your Blood Reports Into <span class="highlight">Actionable Health Insights</span></h1>
+        <p>Simply upload your blood test results and get personalized recommendations for doctors, dietitians, and nutrition plans tailored to your unique health profile.</p>
+        <a href="#" class="btn">Get Started For Free</a>
+      </div>
+      <div class="hero-image">
+        <img src="/api/placeholder/600/400" alt="Blood Report Analysis Dashboard">
+      </div>
+    </div>
+  </section>
+
+  <section class="features" id="features">
+    <div class="container">
+      <div class="section-title">
+        <h2>Why Choose HealthInsighttoday?</h2>
+        <p>Our platform combines medical expertise with advanced technology to help you understand and improve your health.</p>
+      </div>
+      <div class="feature-grid">
+        <div class="feature-card">
+          <div class="feature-icon">
+            <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+              <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 5H7a2 2 0 00-2 2v12a2 2 0 002 2h10a2 2 0 002-2V7a2 2 0 00-2-2h-2M9 5a2 2 0 002 2h2a2 2 0 002-2M9 5a2 2 0 012-2h2a2 2 0 012 2m-3 7h3m-3 4h3m-6-4h.01M9 16h.01" />
+            </svg>
+          </div>
+          <h3>Instant Report Analysis</h3>
+          <p>Our advanced system analyzes your blood reports in seconds, highlighting abnormal parameters and potential health concerns.</p>
+        </div>
+        <div class="feature-card">
+          <div class="feature-icon">
+            <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+              <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M16 7a4 4 0 11-8 0 4 4 0 018 0zM12 14a7 7 0 00-7 7h14a7 7 0 00-7-7z" />
+            </svg>
+          </div>
+          <h3>Doctor Recommendations</h3>
+          <p>Get matched with the right specialists based on your health parameters and location for personalized care.</p>
+        </div>
+        <div class="feature-card">
+          <div class="feature-icon">
+            <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+              <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4.318 6.318a4.5 4.5 0 000 6.364L12 20.364l7.682-7.682a4.5 4.5 0 00-6.364-6.364L12 7.636l-1.318-1.318a4.5 4.5 0 00-6.364 0z" />
+            </svg>
+          </div>
+          <h3>Dietitian Connect</h3>
+          <p>Connect with qualified dietitians who can help you address your specific nutritional needs based on your blood work.</p>
+        </div>
+        <div class="feature-card">
+          <div class="feature-icon">
+            <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+              <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 12h6m-6 4h6m2 5H7a2 2 0 01-2-2V5a2 2 0 012-2h5.586a1 1 0 01.707.293l5.414 5.414a1 1 0 01.293.707V19a2 2 0 01-2 2z" />
+            </svg>
+          </div>
+          <h3>Customized Diet Plans</h3>
+          <p>Receive personalized nutrition recommendations and meal plans designed to address your specific health needs.</p>
+        </div>
+        <div class="feature-card">
+          <div class="feature-icon">
+            <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+              <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 19v-6a2 2 0 00-2-2H5a2 2 0 00-2 2v6a2 2 0 002 2h2a2 2 0 002-2zm0 0V9a2 2 0 012-2h2a2 2 0 012 2v10m-6 0a2 2 0 002 2h2a2 2 0 002-2" />
+            </svg>
+          </div>
+          <h3>Progress Tracking</h3>
+          <p>Monitor your health improvements over time with easy-to-understand trend analysis and progress reports.</p>
+        </div>
+        <div class="feature-card">
+          <div class="feature-icon">
+            <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+              <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 15v2m-6 4h12a2 2 0 002-2v-6a2 2 0 00-2-2H6a2 2 0 00-2 2v6a2 2 0 002 2zm10-10V7a4 4 0 00-8 0v4h8z" />
+            </svg>
+          </div>
+          <h3>Data Security</h3>
+          <p>Your health data is encrypted and secure. We follow strict privacy guidelines to protect your sensitive information.</p>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <section class="how-it-works" id="how-it-works">
+    <div class="container">
+      <div class="section-title">
+        <h2>How It Works</h2>
+        <p>Get started with HealthInsighttoday in just a few simple steps</p>
+      </div>
+      <div class="steps">
+        <div class="step">
+          <div class="step-number">1</div>
+          <h3>Upload Report</h3>
+          <p>Take a photo or upload a PDF of your blood test report</p>
+        </div>
+        <div class="step">
+          <div class="step-number">2</div>
+          <h3>Get Analysis</h3>
+          <p>Our system analyzes your results and identifies areas of concern</p>
+        </div>
+        <div class="step">
+          <div class="step-number">3</div>
+          <h3>View Recommendations</h3>
+          <p>Receive doctor and dietitian suggestions based on your results</p>
+        </div>
+        <div class="step">
+          <div class="step-number">4</div>
+          <h3>Follow Your Plan</h3>
+          <p>Access your personalized diet and health improvement plan</p>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <section class="testimonials">
+    <div class="container">
+      <div class="section-title">
+        <h2>What Our Users Say</h2>
+        <p>Join thousands of satisfied users who have improved their health with HealthInsighttoday</p>
+      </div>
+      <div class="testimonial-grid">
+        <div class="testimonial-card">
+          <p class="testimonial-text">"After years of dealing with high cholesterol, HealthInsighttoday helped me understand my blood work and connected me with a great dietitian. My numbers improved within 3 months!"</p>
+          <div class="testimonial-author">
+            <div class="author-image">
+              <img src="/api/placeholder/100/100" alt="Rajesh Sharma">
+            </div>
+            <div>
+              <div class="author-name">Rajesh Sharma</div>
+              <div class="author-title">Software Engineer, Bangalore</div>
+            </div>
+          </div>
+        </div>
+        <div class="testimonial-card">
+          <p class="testimonial-text">"I discovered I had borderline diabetes through HealthInsighttoday's analysis. The app recommended a specialist who caught it early, and the diet plan has helped me manage my blood sugar levels."</p>
+          <div class="testimonial-author">
+            <div class="author-image">
+              <img src="/api/placeholder/100/100" alt="Priya Patel">
+            </div>
+            <div>
+              <div class="author-name">Priya Patel</div>
+              <div class="author-title">Marketing Manager, Mumbai</div>
+            </div>
+          </div>
+        </div>
+        <div class="testimonial-card">
+          <p class="testimonial-text">"As someone who travels frequently for work, keeping track of my health was challenging. HealthInsighttoday makes it easy to monitor my progress and stay on top of my nutritional needs."</p>
+          <div class="testimonial-author">
+            <div class="author-image">
+              <img src="/api/placeholder/100/100" alt="Vikram Reddy">
+            </div>
+            <div>
+              <div class="author-name">Vikram Reddy</div>
+              <div class="author-title">Business Consultant, Hyderabad</div>
+            </div>
+          </div>
+        </div>
+        <div class="testimonial-card">
+          <p class="testimonial-text">"The personalized diet recommendations have been a game-changer for my thyroid condition. My doctor was impressed with my improvement and asked how I managed it!"</p>
+          <div class="testimonial-author">
+            <div class="author-image">
+              <img src="/api/placeholder/100/100" alt="Ananya Singh">
+            </div>
+            <div>
+              <div class="author-name">Ananya Singh</div>
+              <div class="author-title">Teacher, Delhi</div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <section class="pricing" id="pricing">
+    <div class="container">
+      <div class="section-title">
+        <h2>Simple, Transparent Pricing</h2>
+        <p>Choose the plan that works best for your health journey</p>
+      </div>
+      <div class="pricing-grid">
+        <div class="pricing-card">
+          <h3>Basic</h3>
+          <div class="price">₹0</div>
+          <div class="price-description">Free Forever</div>
+          <ul class="feature-list">
+            <li>Upload up to 2 reports/month</li>
+            <li>Basic report analysis</li>
+            <li>General health recommendations</li>
+            <li>Community access</li>
+            <li>-</li>
+            <li>-</li>
+          </ul>
+          <a href="#" class="btn">Get Started</a>
+        </div>
+        <div class="pricing-card featured">
+          <div class="featured-tag">Popular</div>
+          <h3>Premium</h3>
+          <div class="price">₹499</div>
+          <div class="price-description">per month</div>
+          <ul class="feature-list">
+            <li>Unlimited report uploads</li>
+            <li>Advanced health analysis</li>
+            <li>Doctor recommendations</li>
+            <li>Personalized diet plans</li>
+            <li>Progress tracking</li>
+            <li>Email support</li>
+          </ul>
+          <a href="#" class="btn">Get Started</a>
+        </div>
+        <div class="pricing-card">
+          <h3>Family</h3>
+          <div class="price">₹899</div>
+          <div class="price-description">per month</div>
+          <ul class="feature-list">
+            <li>Up to 5 family members</li>
+            <li>All Premium features</li>
+            <li>Family health dashboard</li>
+            <li>Priority doctor referrals</li>
+            <li>Dietitian consultations</li>
+            <li>24/7 priority support</li>
+          </ul>
+          <a href="#" class="btn">Get Started</a>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <section class="cta">
+    <div class="container">
+      <h2>Ready to Take Control of Your Health?</h2>
+      <p>Join thousands of users who have transformed their health journey with HealthInsighttoday's personalized approach.</p>
+      <a href="#" class="btn">Start Your Free Trial Today</a>
+    </div>
+  </section>
+
+  <footer>
+    <div class="container">
+      <div class="footer-grid">
+        <div>
+          <div class="footer-logo">HealthInsight<span>today</span></div>
+          <p class="footer-description">Transforming blood reports into actionable health insights with technology and expertise.</p>
+          <div class="social-icons">
+            <a href="#">
+              <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                <path d="M18 2h-3a5 5 0 0 0-5 5v3H7v4h3v8h4v-8h3l1-4h-4V7a1 1 0 0 1 1-1h3z"></path>
+              </svg>
+            </a>
+            <a href="#">
+              <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                <path d="M23 3a10.9 10.9 0 0 1-3.14 1.53 4.48 4.48 0 0 0-7.86 3v1A10.66 10.66 0 0 1 3 4s-4 9 4 9a9.74 9.74 0 0 1-2.71 2.88A10.41 10.41 0 0 0 5.91 21c7.55 0 11.67-6.26 11.67-11.67 0-.18 0-.35-.01-.53A8.36 8.36 0 0 0 23 3z"></path>
+              </svg>
+            </a>
+            <a href="#">
+              <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                <rect x="2" y="2" width="20"
